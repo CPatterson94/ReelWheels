@@ -40,10 +40,11 @@ const MovieList = () => {
           // Fetch showtimes for the nearest theater for each movie
           const moviesWithShowtimes = await Promise.all(
             movies.map(async (movie) => {
-              const response = await axios.post(
-                "/showtimes/nearest",
-                { latitude, longitude, movieId: movie.id }
-              );
+              const response = await axios.post("/showtimes/nearest", {
+                latitude,
+                longitude,
+                movieId: movie.id,
+              });
               return { ...movie, showtimes: response.data };
             })
           );
@@ -89,10 +90,11 @@ const MovieList = () => {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
 
-        const response = await axios.post(
-          `/showtimes/nearest`,
-          { latitude, longitude, movieId }
-        );
+        const response = await axios.post(`/showtimes/nearest`, {
+          latitude,
+          longitude,
+          movieId,
+        });
 
         setShowtimes(response.data);
         setIsModalOpen(true);
